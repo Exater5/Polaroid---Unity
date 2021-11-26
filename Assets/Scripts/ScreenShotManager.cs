@@ -11,7 +11,6 @@ public class ScreenShotManager : MonoBehaviour
     [SerializeField] private SpriteRenderer sp;
     [SerializeField] private Image _img;
     private bool _takingPhoto = false;
-    private int _currentPhotoIndex;
 
 
     public void LateUpdate()
@@ -34,7 +33,7 @@ public class ScreenShotManager : MonoBehaviour
             //string fileName = $"{Application.dataPath}/Resources/{_currentPhotoIndex}.png";
             //System.IO.File.WriteAllBytes(fileName, bytes);
             //_currentPhotoIndex++;
-            Sprite targetSp = Sprite.Create(screenShot, new Rect(0, 0, screenShot.width, screenShot.height), Vector2.one * 0.5f, 500f);
+            Sprite targetSp = Sprite.Create(screenShot, new Rect(0, 0, screenShot.width, screenShot.height), Vector2.one * 0.5f, 1000f);
             sp.sprite = targetSp;
             _img.sprite = targetSp;
             _takingPhoto = false;
