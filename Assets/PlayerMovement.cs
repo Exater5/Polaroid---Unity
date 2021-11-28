@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed, _rotSpeed;
+    [SerializeField] private GameObject _camInterface;
     private Animator _cameraAnims;
     private bool _canTakePhoto;
     public bool CanTakePhoto
@@ -13,14 +14,12 @@ public class PlayerMovement : MonoBehaviour
         set 
         { 
             _canTakePhoto = value;
-            if (!value)
-            {
-
-            }
+            _camInterface.SetActive(value);
         }
     }
     private void Start()
     {
+        CanTakePhoto = false;
         _cameraAnims = GetComponent<Animator>();
     }
 
@@ -44,6 +43,17 @@ public class PlayerMovement : MonoBehaviour
         else if(_cameraAnims.GetBool("TakingPhoto"))
         {
             _cameraAnims.SetBool("TakingPhoto", false);
+            CanTakePhoto = false;
         }
+    }
+
+    public void OnCameraActive()
+    {
+        CanTakePhoto = true;
+    }
+
+    public void TakePhoto()
+    {
+        _cameraAnims.SetTrigger("TakePhoto");
     }
 }

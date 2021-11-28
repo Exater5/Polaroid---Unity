@@ -8,10 +8,11 @@ public class ScreenShotManager : MonoBehaviour
 {
     [SerializeField] private int _resWidth = 1920;
     [SerializeField] private int _resHeight = 1080;
-    [SerializeField] private SpriteRenderer sp;
-    [SerializeField] private Image _img;
+    [SerializeField] private GameObject _cardPrefab;
+    [SerializeField] private Transform _creationPoint;
     [SerializeField] private PlayerMovement _playerMovement;
-
+    private SpriteRenderer _spriteRenderer;
+    private GameObject _createdPhoto;
 
     public void LateUpdate()
     {
@@ -27,15 +28,17 @@ public class ScreenShotManager : MonoBehaviour
             RenderTexture.active = null;
             screenShot.Apply();
             Destroy(rt);
-
-            //byte[] bytes = screenShot.EncodeToPNG();
-            //string fileName = $"{Application.dataPath}/Resources/{_currentPhotoIndex}.png";
-            //System.IO.File.WriteAllBytes(fileName, bytes);
-            //_currentPhotoIndex++;
             Sprite targetSp = Sprite.Create(screenShot, new Rect(0, 0, screenShot.width, screenShot.height), Vector2.one * 0.5f, 1000f);
-            sp.sprite = targetSp;
-            _img.sprite = targetSp;
+            if (_createdPhoto != null)
+            {
+                Destroy(_createdPhoto);
+            }
+            _createdPhoto = Instantiate(_cardPrefab, _creationPoint);
+            _createdPhoto.transform.localRotation = Quaternion.Euler(180,0,180);
+            _spriteRenderer = _createdPhoto.transform.GetChild(0).GetComponent<SpriteRenderer>();
+            _spriteRenderer.sprite = targetSp;
             _playerMovement.CanTakePhoto = false;
+            _playerMovement.TakePhoto();
         }
     }  
 }
