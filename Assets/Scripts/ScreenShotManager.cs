@@ -10,13 +10,12 @@ public class ScreenShotManager : MonoBehaviour
     [SerializeField] private int _resHeight = 1080;
     [SerializeField] private SpriteRenderer sp;
     [SerializeField] private Image _img;
-    private bool _takingPhoto = false;
+    [SerializeField] private PlayerMovement _playerMovement;
 
 
     public void LateUpdate()
     {
-        _takingPhoto |= Input.GetKeyDown(KeyCode.K);
-        if (_takingPhoto)
+        if (_playerMovement.CanTakePhoto && Input.GetMouseButtonDown(0))
         {
             RenderTexture rt = new RenderTexture(_resWidth, _resHeight, 24);
             Camera.main.targetTexture = rt;
@@ -36,7 +35,7 @@ public class ScreenShotManager : MonoBehaviour
             Sprite targetSp = Sprite.Create(screenShot, new Rect(0, 0, screenShot.width, screenShot.height), Vector2.one * 0.5f, 1000f);
             sp.sprite = targetSp;
             _img.sprite = targetSp;
-            _takingPhoto = false;
+            _playerMovement.CanTakePhoto = false;
         }
     }  
 }

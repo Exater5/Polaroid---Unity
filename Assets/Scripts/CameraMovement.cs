@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-
-    // Update is called once per frame
+    [SerializeField] private float _rotSpeed;
+    private void Start()
+    {
+        Cursor.visible = false;
+    }
     void Update()
     {
-        float h = Input.GetAxis("Horizontal") * Time.deltaTime * 20;
-        float v = Input.GetAxis("Vertical") * Time.deltaTime * 20;
-
-        transform.Rotate(-v, h, 0);
+        Vector3 targetRot = transform.rotation.eulerAngles + new Vector3(-Input.GetAxis("Mouse Y"), 0, 0) * Time.deltaTime * _rotSpeed;
+        transform.Rotate(targetRot - transform.rotation.eulerAngles);
     }
 }
