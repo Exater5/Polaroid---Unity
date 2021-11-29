@@ -8,6 +8,7 @@ public class CameraMovement : MonoBehaviour
     private void Start()
     {
         Cursor.visible = false;
+        transform.rotation = Quaternion.identity;
     }
     void Update()
     {

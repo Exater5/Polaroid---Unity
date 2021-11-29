@@ -18,6 +18,7 @@ public class ScreenShotManager : MonoBehaviour
     {
         if (_playerMovement.CanTakePhoto && Input.GetMouseButtonDown(0))
         {
+            _playerMovement.SetCameraState(false);
             RenderTexture rt = new RenderTexture(_resWidth, _resHeight, 24);
             Camera.main.targetTexture = rt;
             Texture2D screenShot = new Texture2D(_resWidth, _resHeight, TextureFormat.RGB24, false);
@@ -38,6 +39,7 @@ public class ScreenShotManager : MonoBehaviour
             _spriteRenderer = _createdPhoto.transform.GetChild(0).GetComponent<SpriteRenderer>();
             _spriteRenderer.sprite = targetSp;
             _playerMovement.CanTakePhoto = false;
+            _playerMovement.SetCameraState(true);
             _playerMovement.TakePhoto();
         }
     }  
